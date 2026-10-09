@@ -1,0 +1,47 @@
+services:
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  api:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment: &job_environment
+      JOB_BACKEND: celery
+      CELERY_BROKER_URL: redis://redis:6379/0
+      JOB_DATABASE_PATH: /data/geospatial_jobs.sqlite3
+      JOB_UPLOAD_DIR: /data/job-uploads
+      JOB_WORK_DIR: /data/job-work
+    volumes:
+      - app_data:/data
+    depends_on:
+      redis:
+        condition: service_healthy
+  worker:
+    build: .
+    command: celery -A app.celery_app:celery_app worker --loglevel=info --pool=solo --concurrency=1
+    environment: *job_environment
+    volumes:
+      - app_data:/data
+    depends_on:
+      redis:
+        condition: service_healthy
+  reconciler:
+    build: .
+    command: python -m app.reconciliation
+    environment: *job_environment
+    volumes:
+      - app_data:/data
+    depends_on:
+      redis:
+        condition: service_healthy
+volumes:
+  app_data:
+  redis_data:

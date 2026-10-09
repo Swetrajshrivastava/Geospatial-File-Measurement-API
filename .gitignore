@@ -1,0 +1,12 @@
+.venv/
+.env
+__pycache__/
+*.py[cod]
+.pytest_cache/
+data/uploads/
+data/job-uploads/
+data/job-work/
+data/test-tmp/
+data/*.sqlite3
+data/*.sqlite3-shm
+data/*.sqlite3-wal
