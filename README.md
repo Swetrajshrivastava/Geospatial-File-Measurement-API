@@ -124,7 +124,7 @@ Local tests validate task registration, execution, duplicate delivery, persisten
 
 ## GitHub submission commands
 
-Public repository URL: pending. This workspace has no Git repository or configured remote; the example URL below is a placeholder, not a submitted repository.
+Public repository: [Geospatial-File-Measurement-API](https://github.com/Swetrajshrivastava/Geospatial-File-Measurement-API).
 
 Create a repository, then publish this folder:
 
@@ -133,8 +133,8 @@ git init
 git add .
 git commit -m "Build geospatial measurement API"
 git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/geospatial-file-measurement-api.git
+git remote add origin https://github.com/Swetrajshrivastava/Geospatial-File-Measurement-API.git
 git push -u origin main
 ```
 
-Replace `YOUR-USERNAME` with your GitHub user name and share the resulting public repository URL.
+Share the public repository link above when submitting the project.
